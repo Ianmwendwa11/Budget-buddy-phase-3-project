@@ -1,39 +1,43 @@
-import argparse
 from lib.helpers import create_user, add_transaction, view_user, view_transactions
 
 def main():
-    parser = argparse.ArgumentParser(description="Budget Buddy CLI")
-    subparsers = parser.add_subparsers(dest="command")
+    print("📊 Welcome to Budget Buddy CLI 📊\n")
 
-    # Create user
-    create_user_parser = subparsers.add_parser("create-user")
-    create_user_parser.add_argument("name")
-    create_user_parser.add_argument("budget", type=float)
+    while True:
+        print("Please choose an option:")
+        print("1. Create user")
+        print("2. Add transaction")
+        print("3. View user")
+        print("4. View transactions")
+        print("5. Exit")
 
-    # Add transaction
-    add_tx_parser = subparsers.add_parser("add-transaction")
-    add_tx_parser.add_argument("name")
-    add_tx_parser.add_argument("description")
-    add_tx_parser.add_argument("amount", type=float)
+        choice = input("\nEnter choice (1-5): ").strip()
 
-    view_user_parser = subparsers.add_parser("view-user")
-    view_user_parser.add_argument("name")
+        if choice == "1":
+            name = input("Enter name: ")
+            budget = float(input("Enter budget: "))
+            create_user(name, budget)
 
-    view_tx_parser = subparsers.add_parser("view-transactions")
-    view_tx_parser.add_argument("name")
+        elif choice == "2":
+            name = input("Enter name: ")
+            description = input("Enter transaction description: ")
+            amount = float(input("Enter amount: "))
+            add_transaction(name, description, amount)
 
-    args = parser.parse_args()
+        elif choice == "3":
+            name = input("Enter name: ")
+            view_user(name)
 
-    if args.command == "create-user":
-        create_user(args.name, args.budget)
-    elif args.command == "add-transaction":
-        add_transaction(args.name, args.description, args.amount)
-    elif args.command == "view-user":
-        view_user(args.name)
-    elif args.command == "view-transactions":
-        view_transactions(args.name)
-    else:
-        parser.print_help()
+        elif choice == "4":
+            name = input("Enter name: ")
+            view_transactions(name)
+
+        elif choice == "5":
+            print("Goodbye!")
+            break
+
+        else:
+            print("Invalid option. Please try again.\n")
 
 if __name__ == "__main__":
     main()
